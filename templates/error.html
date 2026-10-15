@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block titulo %}Error {{ codigo }}{% endblock %}
+{% block contenido %}
+<section class="tarjeta login">
+  <h1>Error {{ codigo }}</h1>
+  <p>{{ mensaje }}</p>
+  <a class="btn" href="{{ url_for('inicio') }}">Volver al inicio</a>
+</section>
+{% endblock %}

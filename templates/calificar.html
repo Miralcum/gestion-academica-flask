@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Calificar · {{ materia.nombre }}{% endblock %}
+{% block contenido %}
+<a class="volver" href="{{ url_for('panel_profesor') }}">← Mis materias</a>
+<h1>{{ materia.nombre }}</h1>
+<p class="sub">Escribe calificaciones de 0 a 100. Deja vacío para "pendiente".</p>
+<section class="tarjeta">
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <table>
+      <thead><tr><th>Matrícula</th><th>Estudiante</th><th class="der">Calificación</th></tr></thead>
+      <tbody>
+      {% for a in alumnos %}
+        <tr>
+          <td>{{ a.usuario }}</td><td>{{ a.nombre }}</td>
+          <td class="der"><input class="nota" type="number" min="0" max="100" step="0.1"
+                name="cal_{{ a.id }}" value="{{ a.calificacion if a.calificacion is not none else '' }}"
+                aria-label="Calificación de {{ a.nombre }}"></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <button class="btn" type="submit">Guardar calificaciones</button>
+  </form>
+</section>
+{% endblock %}

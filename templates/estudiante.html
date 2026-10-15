@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}Mis calificaciones{% endblock %}
+{% block contenido %}
+<h1>Mis calificaciones</h1>
+<div class="resumen">
+  <div class="dato"><span class="num">{{ filas|length }}</span><span>Materias inscritas</span></div>
+  <div class="dato"><span class="num">{{ promedio if promedio is not none else '—' }}</span><span>Promedio general</span></div>
+</div>
+<section class="tarjeta">
+  {% if filas %}
+  <table>
+    <thead><tr><th>Materia</th><th>Profesor</th><th class="der">Calificación</th></tr></thead>
+    <tbody>
+    {% for f in filas %}
+      <tr>
+        <td>{{ f.materia }}</td><td>{{ f.profesor }}</td>
+        <td class="der">
+          {% if f.calificacion is none %}<span class="chip pend">Pendiente</span>
+          {% else %}<span class="chip {{ 'ok' if f.calificacion >= 70 else 'mal' }}">{{ f.calificacion|round(1) }}</span>{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p>Aún no estás inscrito en ninguna materia.</p>{% endif %}
+</section>
+{% endblock %}

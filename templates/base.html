@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Gestión Académica{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+  <header class="barra">
+    <span class="marca">🎓 Gestión Académica</span>
+    {% if g.usuario %}
+      <div class="sesion">
+        <span>{{ g.usuario.nombre }} · {{ g.usuario.rol|capitalize }}</span>
+        <form method="post" action="{{ url_for('logout') }}">
+          <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+          <button class="btn-sec" type="submit">Cerrar sesión</button>
+        </form>
+      </div>
+    {% endif %}
+  </header>
+  <main class="contenedor">
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+      {% for cat, msg in mensajes %}<div class="alerta {{ cat }}" role="alert">{{ msg }}</div>{% endfor %}
+    {% endwith %}
+    {% block contenido %}{% endblock %}
+  </main>
+  <footer class="pie">Sistema web de gestión académica · Flask</footer>
+</body>
+</html>

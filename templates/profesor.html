@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}Panel del profesor{% endblock %}
+{% block contenido %}
+<h1>Mis materias</h1>
+<p class="sub">Selecciona una materia para registrar o modificar calificaciones.</p>
+<div class="rejilla">
+  {% for m in materias %}
+  <a class="tarjeta materia" href="{{ url_for('calificar', materia_id=m.id) }}">
+    <h2>{{ m.nombre }}</h2><p>{{ m.alumnos }} estudiante(s)</p><span class="enlace">Calificar →</span>
+  </a>
+  {% else %}<p>No tienes materias asignadas.</p>{% endfor %}
+</div>
+{% endblock %}
